@@ -8,6 +8,9 @@ resource "aws_eks_cluster" "this" {
     endpoint_private_access = true
     endpoint_public_access  = false
   }
+access_config {
+    bootstrap_cluster_creator_admin_permissions = true
+  }
 
   depends_on = [aws_iam_role_policy_attachment.cluster_AmazonEKSClusterPolicy]
 }

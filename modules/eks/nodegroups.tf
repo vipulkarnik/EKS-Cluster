@@ -7,10 +7,15 @@ resource "aws_eks_node_group" "on_demand" {
   node_role_arn = aws_iam_role.node_group.arn
 
   scaling_config {
-    desired_size = 2
-    max_size     = 6
-    min_size     = 2
+    desired_size = 1
+    max_size     = 2
+    min_size     = 1
   }
+depends_on = [
+    aws_iam_role_policy_attachment.worker_node_policy,
+    aws_iam_role_policy_attachment.cni_policy,
+    aws_iam_role_policy_attachment.registry_policy
+  ]
 }
 
 resource "aws_eks_node_group" "spot" {
@@ -22,8 +27,13 @@ resource "aws_eks_node_group" "spot" {
   node_role_arn = aws_iam_role.node_group.arn
 
   scaling_config {
-    desired_size = 2
-    max_size     = 10
+    desired_size = 1
+    max_size     = 2
     min_size     = 1
   }
+depends_on = [
+    aws_iam_role_policy_attachment.worker_node_policy,
+    aws_iam_role_policy_attachment.cni_policy,
+    aws_iam_role_policy_attachment.registry_policy
+  ]
 }
